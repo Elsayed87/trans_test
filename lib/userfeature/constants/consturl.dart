@@ -7,7 +7,5 @@ class UrlConstants {
   static String endPoint3 = '/posts/1';
 
   static String endPoint4 = '/posts';
-  //https://jsonplaceholder.typicode.com/photos
   static String endPoint5 = '/photos';
-
 }
