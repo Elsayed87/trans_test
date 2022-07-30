@@ -5,6 +5,7 @@ import 'package:trans_test/userfeature/data/usermodel.dart';
 import '../data/news.dart';
 import '../data/photo.dart';
 import '../data/post.dart';
+import '../data/products.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,13 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PhotoRepo _postRepo = PhotoRepo();
+  final ProductsRepo _productsRepo = ProductsRepo();
 
-  List<PhotosModel> posts = [];
+  List<ProductsModel> posts = [];
   //late var model;
 
   Future<void> getUserPost() async {
-    posts = await _postRepo.getPhotos();
+    posts = await _productsRepo.fetchArticle();
+    //print(posts);
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -40,10 +42,21 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(),
         body: ListView.builder(
           itemCount: posts.length,
-          itemBuilder: (context, index) => ListTile(
-            //"${}"
-            subtitle: Text('${posts[index].title}'),
-            title: Image.network("${posts[index].thumbnailUrl}"),
+          itemBuilder: (context, index) => Container(
+            width: MediaQuery.of(context).size.width,
+            height:MediaQuery.of(context).size.height ,
+            child: ListTile(
+              title:
+                  Image.network("${posts[index].image}", fit: BoxFit.contain),
+              subtitle: Text(
+                '${posts[index].description}',
+                style: TextStyle(fontSize: 22),
+              ),
+              leading:
+                  Text('${posts[index].price}', style: TextStyle(fontSize: 22)),
+              trailing:
+                  Text('${posts[index].id}', style: TextStyle(fontSize: 22)),
+            ),
           ),
         ));
   }
