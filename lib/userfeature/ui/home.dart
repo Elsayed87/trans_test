@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:trans_test/userfeature/data/user_repository.dart';
+
 import 'package:trans_test/userfeature/data/usermodel.dart';
 
-import '../data/news.dart';
-import '../data/photo.dart';
-import '../data/post.dart';
-import '../data/products.dart';
+import '../../diofeature/data/post_dio.dart';
+import '../../diofeature/data/repository_dio.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,14 +13,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ProductsRepo _productsRepo = ProductsRepo();
+  final UserRepoDio _userRepoDio = UserRepoDio();
 
-  List<ProductsModel> posts = [];
-  //late var model;
+ //List<PostModelDio> list=[];
+  List<dynamic> list=[];
+
 
   Future<void> getUserPost() async {
-    posts = await _productsRepo.fetchArticle();
-    //print(posts);
+    list = (await _userRepoDio.fetchUser())!;
+    print(list);
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -41,21 +40,18 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         appBar: AppBar(),
         body: ListView.builder(
-          itemCount: posts.length,
+          itemCount:list.length,
           itemBuilder: (context, index) => Container(
             width: MediaQuery.of(context).size.width,
-            height:MediaQuery.of(context).size.height ,
+            height: MediaQuery.of(context).size.height,
             child: ListTile(
-              title:
-                  Image.network("${posts[index].image}", fit: BoxFit.contain),
+             // title: Image.network("${posts?.email}", fit: BoxFit.contain),
               subtitle: Text(
-                '${posts[index].description}',
+                '"',
                 style: TextStyle(fontSize: 22),
               ),
-              leading:
-                  Text('${posts[index].price}', style: TextStyle(fontSize: 22)),
-              trailing:
-                  Text('${posts[index].id}', style: TextStyle(fontSize: 22)),
+              leading: Text("", style: TextStyle(fontSize: 22)),
+              trailing: Text('"}', style: TextStyle(fontSize: 22)),
             ),
           ),
         ));
