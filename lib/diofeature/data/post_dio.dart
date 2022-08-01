@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final postModelDio = postModelDioFromJson(jsonString);
+//     final postUserDio = postUserDioFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<PostModelDio> postModelDioFromJson(String str) => List<PostModelDio>.from(json.decode(str).map((x) => PostModelDio.fromJson(x)));
+List<PostUserDio> postUserDioFromJson(String str) => List<PostUserDio>.from(json.decode(str).map((x) => PostUserDio.fromJson(x)));
 
-String postModelDioToJson(List<PostModelDio> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String postUserDioToJson(List<PostUserDio> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class PostModelDio {
-  PostModelDio({
+class PostUserDio {
+  PostUserDio({
     required this.userId,
     required this.id,
     required this.title,
@@ -22,7 +22,7 @@ class PostModelDio {
   final String title;
   final String body;
 
-  factory PostModelDio.fromJson(Map<String, dynamic> json) => PostModelDio(
+  factory PostUserDio.fromJson(Map<String, dynamic> json) => PostUserDio(
     userId: json["userId"],
     id: json["id"],
     title: json["title"],
