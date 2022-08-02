@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../diofeature/data/post_dio.dart';
-import '../../diofeature/data/repository_dio.dart';
-import '../data/post.dart';
+import '../../newdiofolder/diomodels/user_model.dart';
+import '../../newdiofolder/diorepository/user_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,26 +13,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //UserRepoDio userRepoDio=UserRepoDio();
   // RepoTest repoTest = RepoTest();
-  ChallengeAhmed challengeAhmed = ChallengeAhmed();
-  ChallengeAhmedaa challengeAhmedaa= ChallengeAhmedaa();
-  late Meta meta;
+  // ChallengeAhmed challengeAhmed = ChallengeAhmed();
+  // ChallengeAhmedaa challengeAhmedaa= ChallengeAhmedaa();
+  //late Meta meta;
+  UserApiRepository userApiRepository = UserApiRepository();
 
-  List<Datum> list=[];
+  // List<Datum> list=[];
+    late Data data;
 
   Future<void> getUserPost() async {
-    meta = await challengeAhmedaa.fetchUser();
-    setState(() {
-
-    });
+    data = await userApiRepository.fetchUserData();
+    print(data.lastName);
+   // setState(() {});
     // print(list.length);
 
-   // Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
   void initState() {
     getUserPost();
-    setState(() {});
+
     super.initState();
   }
 
@@ -42,28 +42,24 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(),
-      body: meta.pagination.pages ==0
-          ? CircularProgressIndicator()
-          : ListView.builder(
-              itemCount: meta.pagination.pages,
-              itemBuilder: (context, int index) => Container(
-                // width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height,
-                child: ListTile(
-                    // title: Image.network("${posts?.email}", fit: BoxFit.contain),
-                    //${list[index]['username']}
-                    subtitle: Text(
-                      //0.email
-                      '${meta.pagination.links.next} ',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                    leading: Text("}",
-                        style: TextStyle(fontSize: 22)),
-                    //0.address.street//0.company.name
-                    title: Text(" ",
-                        style: TextStyle(fontSize: 22))),
+      body:data.id==0 ? const CircularProgressIndicator(): ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, int index) => Container(
+          // width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height,
+          child: ListTile(
+              // title: Image.network("${posts?.email}", fit: BoxFit.contain),
+              //${list[index]['username']}
+              subtitle: Text(
+                //0.email
+                '${data.email} ',
+                style: TextStyle(fontSize: 22),
               ),
-            ),
+              leading: Text(" ${data.id}", style: TextStyle(fontSize: 22)),
+              //0.address.street//0.company.name
+              title: Image.network(data.avatar,height: 200,width: 200,)),
+        ),
+      ),
     );
   }
 }
